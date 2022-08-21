@@ -37,6 +37,11 @@ function Class:new(super)
         return obj
     end
 
+    function class:new_empty()
+        local obj = setmetatable({}, self.metatable)
+        return obj
+    end
+
     return class
 end
 

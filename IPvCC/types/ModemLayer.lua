@@ -47,15 +47,20 @@ function ModemLayer:recive()
     local to = packet["to"]
     local data = packet["data"]
 
-    assert(type(from) == "number", "Received Packet.from must be a number")
-    assert(type(to) == "number", "Received Packet.to must be a number")
-    assert(type(data) == "table", "Received Packet.data must be a table")
-    local packet = Packet:new()
-    packet:fromTable(sendPort,replyPort,to,from,data)
+    local function decode()
+        assert(type(from) == "number", "Received Packet.from must be a number")
+        assert(type(to) == "number", "Received Packet.to must be a number")
+        assert(type(data) == "table", "Received Packet.data must be a table")
+        local packet = Packet:new()
+        packet:fromTable(sendPort,replyPort,to,from,data)
 
-    os.queueEvent("IPvCC|packet", packet)
-    self.interface.rx = self.interface.rx + 1
-    self.interface:update()
+        os.queueEvent("IPvCC|packet", packet)
+        self.interface.rx = self.interface.rx + 1
+        self.interface:update()
+    end
+    if not pcall(decode) then
+        self.interface.errors = self.interface.errors + 1
+    end
 end
 
 return ModemLayer

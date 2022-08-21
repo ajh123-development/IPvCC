@@ -12,6 +12,7 @@ function Interface:__new()
     self.infoString = ""
     self.tx = 0
     self.rx = 0
+    self.errors = 0
 end
 
 --[[

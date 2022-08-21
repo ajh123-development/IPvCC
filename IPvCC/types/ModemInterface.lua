@@ -11,6 +11,7 @@ function ModemInterface:__new(side)
     self.side = side
     self.tx = 0
     self.rx = 0
+    self.errors = 0
 
     local statsPath = "/sys/class/net/"..self.side
     if fs.exists(statsPath.."/stats") then
@@ -20,6 +21,7 @@ function ModemInterface:__new(side)
         if stats ~= nil then
             self.tx = stats.tx
             self.rx = stats.rx
+            self.errors = stats.errors
         end
     end
 
@@ -31,8 +33,9 @@ function ModemInterface:update()
 
         id ]]..os.getComputerID()..[[
 
-        RX packets:]]..self.rx..[[      
-        TX packets:]]..self.tx..[[   
+        RX packets:]]..self.rx..[[
+        TX packets:]]..self.tx..[[
+        errors:]]..self.errors..[[
         ]]
 
     local statsPath = "/sys/class/net/"..self.side
@@ -41,7 +44,7 @@ function ModemInterface:update()
     h.write(os.getComputerID())
     h.close()
     h = fs.open(statsPath.."/stats", "w")
-    h.write(textutils.serialiseJSON({rx=self.rx, tx=self.tx}))
+    h.write(textutils.serialiseJSON({rx=self.rx, tx=self.tx, errors=self.errors}))
     h.close()
 end
 
