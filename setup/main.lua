@@ -93,7 +93,14 @@ win.blit("\141"..("\140"):rep(w-2).."\142",("8"):rep(w),("f"):rep(w))
 t_win.clear()
 local old_term = term.redirect(t_win)
 local shell_coro = coroutine.create(function()
-    api.create.button({
+    local w, h = term.getSize()
+    local gui = api.create_gui(g_win)
+    local frame = gui.create.frame({
+        x=0,y=0,width=w,height=h,
+        dragger={x=0,y=0,width=0,height=0}
+    })
+    local sGui = frame.child
+    sGui.create.button({
         x=5,y=6,width=10,height=3,
         background_color=colors.green,
         text=gui.text{
@@ -105,6 +112,7 @@ local shell_coro = coroutine.create(function()
         os.reboot()
         end
     })
+    gui.execute()
 end)
 local function update_shell()
     sleep(0.05)
