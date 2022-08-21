@@ -16,7 +16,7 @@ local async = true
 local silent = false
 
 local myPath = shell.dir()
-shell.setDr("/")
+shell.setDir("/")
 
 local preset = {
     -- The GitHub account name
@@ -39,7 +39,7 @@ local preset = {
     -- Function to run when the download completes
     done = function()
         shell.run("IPvCC/setup/main.lua")
-        shell.setDr(myPath)
+        shell.setDir(myPath)
     end
 }
  
@@ -56,7 +56,7 @@ if #args < 2 then
 end
  
 local function save(data,file)
-    shell.setDr("/")
+    shell.setDir("/")
     local file = shell.resolve(file:gsub("%%20"," "))
     if not (fs.exists(string.sub(file,1,#file - #fs.getName(file))) and fs.isDir(string.sub(file,1,#file - #fs.getName(file)))) then
         if fs.exists(string.sub(file,1,#file - #fs.getName(file))) then fs.delete(string.sub(file,1,#file - #fs.getName(file))) end
