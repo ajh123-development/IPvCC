@@ -34,5 +34,5 @@ end
 parallel.waitForAll(table.unpack(downloads))
 print("Finished downloading GuiH")
 
-local install = require "/tmp/IPvCC/setup/installer.lua"
+local install = require "/tmp/IPvCC/setup/installer"
 install:start()
