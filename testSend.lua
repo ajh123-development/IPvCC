@@ -1,4 +1,4 @@
-package.preload.IPvCC=loadfile('/IPvCC/init.lua')
+package.path = "/?.lua;" .. package.path
 IPvCC = require("IPvCC")
 
 IPvCC.checkInterfaces()
