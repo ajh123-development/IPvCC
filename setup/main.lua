@@ -84,7 +84,10 @@ win.blit("\141"..("\140"):rep(w-2).."\142",("8"):rep(w),("f"):rep(w))
 t_win.clear()
 local old_term = term.redirect(t_win)
 local shell_coro = coroutine.create(function()
-    print("Hello")
+    while true do
+        sleep(0.02)
+        print("Hello")
+    end
 end)
 local function update_shell()
     sleep(0.05)
