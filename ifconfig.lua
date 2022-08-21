@@ -1,4 +1,4 @@
-package.path = "/?/init.lua;" .. package.path
+package.path = "/?/init.lua;/?.lua;" .. package.path
 IPvCC = require("IPvCC")
 
 
