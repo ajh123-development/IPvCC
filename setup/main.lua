@@ -35,8 +35,13 @@ parallel.waitForAll(table.unpack(downloads))
 print("Finished downloading GuiH")
 
 local g_win = window.create(term.current(),1,1,term.getSize())
+local program,w,h = ...
+local args = {...}
+table.remove(args,1)
+table.remove(args,1)
+table.remove(args,1)
 w,h = (w ~= "") and w or "25",(h ~= "") and h or "15"
-local api = require "/tmp/GuiH"
+local api = require("/tmp/GuiH")
 local gui = api.create_gui(g_win)
 local frame = gui.create.frame({
     x=2,2,width=tonumber(w),height=tonumber(h),
@@ -84,9 +89,7 @@ win.blit("\141"..("\140"):rep(w-2).."\142",("8"):rep(w),("f"):rep(w))
 t_win.clear()
 local old_term = term.redirect(t_win)
 local shell_coro = coroutine.create(function()
-    while true do
-        print("Hello")
-    end
+    shell.run((program ~= "") and program or "sh",unpack(args))
 end)
 local function update_shell()
     sleep(0.05)
@@ -111,7 +114,6 @@ local function update_shell()
 end
 local err = gui.execute(update_shell)
 term.redirect(old_term)
-
 term.clear()
 term.setCursorPos(1,1)
 print("Ended window session. "..((err ~= nil) and err or ""))
