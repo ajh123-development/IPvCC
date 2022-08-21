@@ -10,7 +10,6 @@ fs.move("IPvCC/testRecv.lua", "IPvCC_programs/testRecv.lua")
 fs.delete("IPvCC/setup")
 fs.move("IPvCC/IPvCC", "tmp/IPvCC")
 fs.delete("IPvCC")
-fs.makeDir("IPvCC")
 fs.move("tmp/IPvCC", "IPvCC")
 fs.delete("tmp/IPvCC")
 
