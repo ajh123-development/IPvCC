@@ -85,7 +85,6 @@ t_win.clear()
 local old_term = term.redirect(t_win)
 local shell_coro = coroutine.create(function()
     while true do
-        sleep(0.02)
         print("Hello")
     end
 end)
