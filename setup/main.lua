@@ -78,7 +78,7 @@ local frame = gui.create.frame({
 local w, h = term.getSize()
 local gui = api.create_gui(g_win)
 local frame = gui.create.frame({
-    x=0,y=0,width=w,height=h,
+    x=1,y=1,width=w,height=h,
     dragger={x=1,y=1,width=w,height=1}
 })
 local sGui = frame.child
