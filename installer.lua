@@ -25,16 +25,17 @@ local preset = {
     branch = "main",
     
     -- The local folder to save all the files to (defaults to '/')
-    path = nil,
+    path = "/tmp",
     
     -- Function to run before starting the download
     start = function()
-        if not silent then print("Downloading IPvCC...") end
+        if not silent then print("Downloading IPvCC setup...") end
     end,
     
     -- Function to run when the download completes
     done = function()
         if not silent then print("Done") end
+        shell.run("/tmp/IPvCC/setup/main.lua")
     end
 }
  
