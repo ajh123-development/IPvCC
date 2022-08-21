@@ -1,6 +1,6 @@
 --[[ /gitget
 GitHub downloading utility for CC.
-Developed by apemanzilla.
+Developed by apemanzilla. Modified by ajh123-development
  
 This requires ElvishJerricco's JSON parsing API.
 Direct link: http://pastebin.com/raw.php?i=4nRg9CHU
@@ -14,7 +14,10 @@ local async = true
 -- Whether to write to the terminal as files are downloaded
 -- Note that unless checked for this will not affect pre-set start/done code below
 local silent = false
- 
+
+local myPath = shell.dir()
+shell.setPath("/")
+
 local preset = {
     -- The GitHub account name
     user = "ajh123-development",
@@ -25,17 +28,18 @@ local preset = {
     branch = "main",
     
     -- The local folder to save all the files to (defaults to '/')
-    path = "/IPvCC",
+    path = "IPvCC",
     
     -- Function to run before starting the download
     start = function()
         if not silent then print("Downloading IPvCC setup...") end
-        fs.delete("/IPvCC")
+        fs.delete("IPvCC")
     end,
     
     -- Function to run when the download completes
     done = function()
-        shell.run("/IPvCC/setup/main.lua")
+        shell.run("IPvCC/setup/main.lua")
+        shell.setPath(myPath)
     end
 }
  
