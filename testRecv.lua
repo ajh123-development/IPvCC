@@ -1,4 +1,4 @@
-IPvCC = require "IPvCC"
+IPvCC = require "/IPvCC"
 IPvCC.checkInterfaces()
 
 IPvCC.interfaces["back"]:open(10)
