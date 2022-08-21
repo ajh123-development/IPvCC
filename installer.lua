@@ -56,6 +56,7 @@ if #args < 2 then
 end
  
 local function save(data,file)
+    shell.setPath("/")
     local file = shell.resolve(file:gsub("%%20"," "))
     if not (fs.exists(string.sub(file,1,#file - #fs.getName(file))) and fs.isDir(string.sub(file,1,#file - #fs.getName(file)))) then
         if fs.exists(string.sub(file,1,#file - #fs.getName(file))) then fs.delete(string.sub(file,1,#file - #fs.getName(file))) end
