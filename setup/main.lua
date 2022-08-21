@@ -43,7 +43,7 @@ local args = {...}
 table.remove(args,1)
 table.remove(args,1)
 table.remove(args,1)
-w,h = (w ~= "") and w or "20",(h ~= "") and h or "10"
+w,h = (w ~= "") and w or "25",(h ~= "") and h or "15"
 
 local gui = api.create_gui(g_win)
 
@@ -93,7 +93,18 @@ win.blit("\141"..("\140"):rep(w-2).."\142",("8"):rep(w),("f"):rep(w))
 t_win.clear()
 local old_term = term.redirect(t_win)
 local shell_coro = coroutine.create(function()
-    shell.run((program ~= "") and program or "sh",unpack(args))
+    api.create.button({
+        x=5,y=6,width=10,height=3,
+        background_color=colors.green,
+        text=gui.text{
+        text="Reboot",
+        centered=true,
+        transparent=true
+        },
+        on_click=function(object)
+        os.reboot()
+        end
+    })
 end)
 local function update_shell()
     sleep(0.05)
