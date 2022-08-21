@@ -41,7 +41,7 @@ table.remove(args,1)
 table.remove(args,1)
 table.remove(args,1)
 w,h = (w ~= "") and w or "25",(h ~= "") and h or "15"
-local api = require("/tmp/GuiH")
+local api = require("/tmp/GuiH.main")
 local gui = api.create_gui(g_win)
 local frame = gui.create.frame({
     x=2,2,width=tonumber(w),height=tonumber(h),
