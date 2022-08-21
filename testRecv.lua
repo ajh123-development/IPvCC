@@ -14,7 +14,7 @@ local function check()
         local _, packet = os.pullEvent("IPvCC|packet")
         if packet.to == os.getComputerID() then
             print(packet.from, textutils.serialiseJSON(packet.data))
-        end 
+        end
     end
 end
 
