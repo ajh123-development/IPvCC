@@ -67,8 +67,8 @@ local function download(url, file)
 end
  
 if not json then
-    download("http://pastebin.com/raw.php?i=4nRg9CHU","json")
-    os.loadAPI("json")
+    download("http://pastebin.com/raw.php?i=4nRg9CHU","/tmp/IPvCC/json")
+    os.loadAPI("/tmp/IPvCC/json")
 end
  
 preset.start()
