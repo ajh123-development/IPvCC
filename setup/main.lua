@@ -34,6 +34,7 @@ end
 parallel.waitForAll(table.unpack(downloads))
 print("Finished downloading GuiH")
 
+local g_win = window.create(term.current(),1,1,term.getSize())
 w,h = (w ~= "") and w or "25",(h ~= "") and h or "15"
 local api = require "/tmp/GuiH"
 local gui = api.create_gui(g_win)
