@@ -35,8 +35,9 @@ local preset = {
     
     -- Function to run when the download completes
     done = function()
-        if not silent then print("Done") end
         shell.run("/IPvCC/setup/main.lua")
+        fs.delete("/installer.lua")
+        fs.delete("/json")
     end
 }
  
