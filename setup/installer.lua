@@ -1,4 +1,4 @@
-local api = require "/tmp/GuiH.main"
+local api = require "/tmp/GuiH"
 local main = {}
 
 local g_win = window.create(term.current(),1,1,term.getSize())
