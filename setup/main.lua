@@ -74,69 +74,30 @@ local frame = gui.create.frame({
     end,
     btn={true}
 })
-local shown = true
-local win = frame.window
-local ele = frame.child
-local w,h = win.getSize()
-local t_win = window.create(win,2,2,w-2,h-2)
 
-win.setCursorPos(1,1)
-win.blit((" "):rep(w),("f"):rep(w),("7"):rep(w))
-for i=2,h-1 do
-    win.setCursorPos(1,i)
-    win.blit(("\149"):rep(w),"8"..("f"):rep(w-1),"f"..("8"):rep(w-1))
-end
-win.setCursorPos(1,h)
-win.blit("\141"..("\140"):rep(w-2).."\142",("8"):rep(w),("f"):rep(w))
-
-
-t_win.clear()
-local old_term = term.redirect(t_win)
-local shell_coro = coroutine.create(function()
-    local w, h = term.getSize()
-    local gui = api.create_gui(g_win)
-    local frame = gui.create.frame({
-        x=0,y=0,width=w,height=h,
-        dragger={x=0,y=0,width=0,height=0}
-    })
-    local sGui = frame.child
-    sGui.create.button({
-        x=5,y=6,width=10,height=3,
-        background_color=colors.green,
-        text=gui.text{
-        text="Reboot",
-        centered=true,
-        transparent=true
-        },
-        on_click=function(object)
-        os.reboot()
-        end
-    })
-    gui.execute()
-end)
-local function update_shell()
-    sleep(0.05)
-    while coroutine.status(shell_coro) ~= "dead" do
-        local ev_data = table.pack(os.pullEvent())
-        local ev = api.convert_event(table.unpack(ev_data,1,ev_data.n))
-        if api.valid_events[ev.name] then
-            local x,y = win.getPosition()
-            ev_data[3] = ev.x-x
-            ev_data[4] = ev.y-y
-        end
-        if not (frame.dragged and ev_data[1] == "mouse_drag") and ev_data[1] ~= "key_up" then
-            coroutine.resume(shell_coro,table.unpack(ev_data,1,ev_data.n))
-        end
-        local cx,cy = win.getCursorPos()
-        local prg = shell.getRunningProgram():match("[^%/-]+$")
-        local px,py = win.getCursorPos()
-        win.setCursorPos(1,1)
-        win.blit(" "..prg..(" "):rep(w-#prg-1),("0"):rep(w),("7"):rep(w))
-        win.setCursorPos(px,py)
+local w, h = term.getSize()
+local gui = api.create_gui(g_win)
+local frame = gui.create.frame({
+    x=0,y=0,width=w,height=h,
+    dragger={x=1,y=1,width=w,height=1}
+})
+local sGui = frame.child
+sGui.create.button({
+    x=5,y=6,width=10,height=3,
+    background_color=colors.green,
+    text=gui.text{
+    text="Reboot",
+    centered=true,
+    transparent=true
+    },
+    on_click=function(object)
+    os.reboot()
     end
-end
-local err = gui.execute(update_shell)
-term.redirect(old_term)
+})
+gui.execute()
+
+local err = gui.execute()
+
 term.clear()
 term.setCursorPos(1,1)
 print("Ended window session. "..((err ~= nil) and err or ""))
