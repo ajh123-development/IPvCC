@@ -30,6 +30,7 @@ local preset = {
     -- Function to run before starting the download
     start = function()
         if not silent then print("Downloading IPvCC setup...") end
+        fs.delete("/IPvCC")
     end,
     
     -- Function to run when the download completes
