@@ -25,7 +25,7 @@ local preset = {
     branch = "main",
     
     -- The local folder to save all the files to (defaults to '/')
-    path = "/tmp/IPvCC",
+    path = "/IPvCC",
     
     -- Function to run before starting the download
     start = function()
