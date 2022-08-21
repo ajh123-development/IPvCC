@@ -1,4 +1,8 @@
-IPvCC = require "/IPvCC"
+local myPath = shell.dir()
+shell.setDir("/")
+IPvCC = require "IPvCC"
+shell.setDir(myPath)
+
 IPvCC.checkInterfaces()
 
 IPvCC.interfaces["back"]:open(10)
