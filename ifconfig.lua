@@ -1,7 +1,6 @@
-local myPath = shell.dir()
-shell.setDir("/")
-IPvCC = require "IPvCC"
-shell.setDir(myPath)
+package.preload.IPvCC=loadfile('/IPvCC/init.lua')
+IPvCC = require("IPvCC")
+
 
 IPvCC.checkInterfaces()
 for id, interface in pairs(IPvCC.interfaces) do
