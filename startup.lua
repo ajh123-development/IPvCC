@@ -6,9 +6,9 @@ local function getRunningPath()
     return runningProgram:sub( 1, #runningProgram - #programName )
 end
 
-shell.setAlias("ifconfig", "/"..getRunningPath().."/ifconfig.lua")
-
 IPvCC = require "IPvCC"
 IPvCC.deleteInterfaceFiles()
 
-fs.copy( getRunningPath().."/IPvCC", "/IPvCC")
+fs.copy(getRunningPath().."/IPvCC", "/IPvCC")
+
+shell.setAlias("ifconfig", "/"..getRunningPath().."/ifconfig.lua")
