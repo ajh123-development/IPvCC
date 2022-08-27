@@ -19,9 +19,15 @@ function ModemInterface:__new(side)
         local stats = textutils.unserialiseJSON(h.readAll())
         h.close()
         if stats ~= nil then
-            self.tx = stats.tx
-            self.rx = stats.rx
-            self.errors = stats.errors
+            if stats.tx ~= nil then
+                self.tx = stats.tx
+            end
+            if stats.rx ~= nil then
+                self.rx = stats.rx
+            end
+            if stats.errors ~= nil then
+                self.errors = stats.errors
+            end
         end
     end
 
