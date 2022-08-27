@@ -4,7 +4,7 @@ local Core = require "IPvCC.core"
 local Packet = {}
 
 Packet.Packet = Class:new()
-function Packet:__new(sendPort, replyPort, to, data)
+function Packet:init(sendPort, replyPort, to, data)
     if not Core.is_instance(data, Packet.Packable) then
         error("data must be Packable")
     end
@@ -19,9 +19,12 @@ function Packet:__new(sendPort, replyPort, to, data)
 end
 
 function Packet.Packet:fromTable(sendPort, replyPort, to, from, data)
-    if not Core.is_instance(data, Packet.Packable) then
-        error("data must be Packable")
-    end
+    -- TODO: get Packable working
+    -- if not Core.is_instance(data, Packet.Packable) then
+    --     error("data must be Packable")
+    -- end
+    assert(type(data) == "table", "data must be a number")
+
     assert(type(sendPort) == "number", "sendPort must be a number")
     assert(type(replyPort) == "number", "replyPort must be a number")
     assert(type(to) == "number", "to must be a number")
@@ -43,6 +46,7 @@ function Packet.Packet:toTable()
     }
 end
 
+-- TODO: get Packable working
 local packets = {}
 Packet.Packable = Class:new()
 function Packet.Packable:__new(id, data, headers)
@@ -57,11 +61,14 @@ function Packet.Packable:__new(id, data, headers)
     self.data = data
     self.id = id
     self.headers = headers
-    packets[id] = self.new_empty
+    packets[id] = {}
+    packets[id]["type"] = self.new_empty
+    packets[id]["metatable"] = self.metatable
 end
 
+-- TODO: get Packable working
 function Packet.Packable:toTable()
-    if Core.is_instance(self.data, Packet.Packable) then
+    if Core.is_instance(self.data.metatable, Packet.Packable.metatable) then
         return {
             type=self.id,
             headers=self.headers,
@@ -78,21 +85,24 @@ function Packet.Packable:toTable()
     }
 end
 
-function Packet.packableFromTable(data)
+-- TODO: get Packable working
+function Packet.PackableFromTable(data)
     assert(type(data) == "table", "data must be a table")
-    if data["data"]["type"] == "table" then
+    if data.data.type == "table" then
         local packet = Packet.Packable:new_empty()
-        packet.id = data["type"]
-        packet.headers = data["headers"]
-        packet.data = data["data"]["data"]
+        packet.id = data.type
+        packet.headers = data.headers
+        packet.data = data.data
         return packet
     else
-        local constructor = packets[data["type"]]
+        local constructor = packets[data.type].type
         if constructor == nil then return nil end
-        local packet = constructor()
-        packet.id = data["type"]
-        packet.headers = data["headers"]
-        packet.data = data["data"]
+        local packet = constructor(packets[data.type].metatable)
+        packet.id = data.type
+        packet.headers = data.headers
+        data.data = Packet.PackableFromTable(data.data)
+        packet.data = Packet.PackableFromTable(data.data)
+        return packet
     end
 end
 

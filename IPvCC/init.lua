@@ -7,6 +7,7 @@ IPvCC.types = {}
 IPvCC.Class = require "IPvCC.class"
 IPvCC.types.Packet = require "IPvCC.types.Packet".Packet
 IPvCC.types.Packable = require "IPvCC.types.Packet".Packable
+IPvCC.PackableFromTable = require "IPvCC.types.Packet".PackableFromTable
 IPvCC.INet.Datagram = require "IPvCC.protocols.ip.Datagram"
 
 --Interfaces

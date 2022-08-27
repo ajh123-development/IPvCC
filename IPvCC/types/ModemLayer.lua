@@ -22,8 +22,8 @@ function ModemLayer:transmit(packet)
         packet.from = os.getComputerID()
         if is_instance(self.interface, ModemInterface) then
             self.interface.modem.transmit(
-                packet.sendPort,
-                packet.replyPort,
+                1,
+                2,
                 packet:toTable()
             )
             self.interface.tx = self.interface.tx + 1
@@ -33,9 +33,9 @@ function ModemLayer:transmit(packet)
 end
 
 function ModemLayer:recive()
-    local _, side, sendPort, replyPort, packet, _
+    local _, side, _, _, packet, _
     if is_instance(self.interface, ModemInterface) then
-        _, side, sendPort, replyPort, packet, _ = os.pullEvent("modem_message")
+        _, side, _, _, packet, _ = os.pullEvent("modem_message")
         if not self.interface.side == side then
             return
         end
@@ -43,6 +43,8 @@ function ModemLayer:recive()
         return
     end
 
+    local sendPort = packet["sendPort"]
+    local replyPort = packet["replyPort"]
     local from = packet["from"]
     local to = packet["to"]
     local data = packet["data"]

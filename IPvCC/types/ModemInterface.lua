@@ -25,6 +25,7 @@ function ModemInterface:__new(side)
         end
     end
 
+    self.modem.open(2)
     self:update()
 end
 
@@ -49,10 +50,8 @@ function ModemInterface:update()
 end
 
 function ModemInterface:open(port)
-    self.modem.open(port)
 end
 function ModemInterface:close(port)
-    self.modem.close(port)
 end
 
 return ModemInterface
